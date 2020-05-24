@@ -1,7 +1,9 @@
 {
   "name": "demo2",
   "version": "1.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "sweetalert": "^2.1.2"
+  },
   "devDependencies": {
     "sweetalert2": "^9.13.1"
   }
