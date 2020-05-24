@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/pwallet")
@@ -41,6 +42,19 @@ public class ApiController {
         return principal.toString();
     }
 
+    @RequestMapping(value = "/getid", method = RequestMethod.GET, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
+    public Todo getById(ModelMap model, @RequestParam Long id) {
+
+        Todo todo = todoService.getTodoById(id).get();
+        model.put("todo", todo);
+
+        return todo;
+    }
+
+
+
+
+
     @DeleteMapping("/delete")
     public Map<String, Boolean> delete(@RequestParam Long id) {
 
@@ -52,29 +66,4 @@ public class ApiController {
 
         return assoc;
     }
-
-
-//    @RequestMapping(value = "/delete-todo", method = RequestMethod.DELETE)
-//    public String deleteTodo(@RequestParam long id) {
-//        todoService.deleteTodo(id);
-//
-//        return "redirect:/pwallet";
-//    }
-
-//
-//
-//    // GET: Wallet/Delete/5
-//        [HttpDelete]
-//    public async Task<IActionResult> Delete(int id)
-//    {
-//        var PasswdModelFromDb = await _db.PWallet.FirstOrDefaultAsync(u => u.ID == id);
-//        if (PasswdModelFromDb == null)
-//        {
-//            return Json(new { success = false, message = "Błąd w trakcie usuwania" });
-//        }
-//        _db.PWallet.Remove(PasswdModelFromDb);
-//        await _db.SaveChangesAsync();
-//        return Json(new { success = true, message = "Usunieto z Powodzeniem" });
-//    }
-
 }

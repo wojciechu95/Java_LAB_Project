@@ -54,7 +54,7 @@ function loadDataTable() {
                 data: "id",
                 "render": function (data) {
                     return `<div class="text-center">
-                        <a href="/pwallet/update-todo?id=${data}" class='btn btn-success text-white'
+                        <a onclick="showInPopup('/pwallet/getid?id=${data}','Update Transaction')" class='btn btn-success text-white'
                             style='cursor:pointer;'>
                             Update
                         </a>
