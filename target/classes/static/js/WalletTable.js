@@ -29,7 +29,7 @@ function loadDataTable() {
                         : `<td class="text-center"><i class="text-warning h3 fas fa-clipboard-check"></i></td>`;
                     isD = data;
                     return td;
-                }, "width": "15%"
+                }, "width": "10%"
             },
             {data: "userName", "width": "10%"},
             {
@@ -39,7 +39,7 @@ function loadDataTable() {
                         ? `<td class="text-center">${data}</td>`
                         : `<td class="text-center"><del>${data}</del></td>`;
                     return td;
-                }, "width": "30%"
+                }, "width": "35%"
             },
             {
                 data: "targetDate",
