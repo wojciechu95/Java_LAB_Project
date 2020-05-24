@@ -1,0 +1,9 @@
+<main th:fragment="main" class="container">
+    <div th:fragment="content" class="pb-3">
+        <div class="text-center">
+            <h1 class="display-4">Welcome</h1>
+            <time id="zegar">00:00:00</time>
+        </div>
+        <script type="text/javascript" th:src="@{~/js/clock.js}"></script>
+    </div>
+</main>

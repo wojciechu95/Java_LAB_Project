@@ -1,0 +1,62 @@
+<main th:fragment="main" class="container">
+    <div th:fragment="content" class="pb-3">
+        <link rel="stylesheet" type="text/css" th:href="@{~/css/jquery.datetimepicker.css}"/>
+        <script type="text/javascript" th:src="@{~/js/jquery.datetimepicker.full.js}"></script>
+        <h2 class="text-info">Add OR Edit TODO <i class="fas fa-tasks"></i></h2>
+
+        <div class="border container" style="padding:30px;">
+            <form action="#" th:action="@{/pwallet/add-todo}" th:object="${todo}" method="post">
+                <input hidden th:field="*{id}"/>
+
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label path="description">Description</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" th:field="*{description}" class="form-control"
+                               required="required"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label path="targetDate">Target Date</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" th:field="*{targetDate}" class="form-control"
+                               required="required"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label path="targetDate">Checked </label>
+                    </div>
+                    <div class="col-6">
+                        <input class="display-3" type="checkbox" th:field="*{isDone}"/> <i class="text-success h3 fas fa-clipboard-check"></i>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-3 offset-3">
+                        <button type="submit" class="btn btn-primary form-control">
+                            Save
+                        </button>
+                    </div>
+                    <div class="col-3">
+                        <a th:href="@{/pwallet}" class="btn btn-success form-control">
+                            Back to list
+                        </a>
+                    </div>
+                </div>
+            </form>
+
+            <script>
+                $(function () {
+                    $("#targetDate").datetimepicker({
+                        format: 'd.m.Y H:i'
+                    });
+                });
+            </script>
+        </div>
+    </div>
+</main>
