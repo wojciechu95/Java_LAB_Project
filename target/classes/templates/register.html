@@ -1,0 +1,83 @@
+<main th:fragment="main" class="container">
+    <div th:fragment="content" class="pb-3">
+        <div class="row text-dark">
+            <div class="col-md-6 offset-md-3">
+                <div class="card login-logout-tab">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/auth/login}">Zaloguj</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/auth/register}">Zarejestruj</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-content">
+                        <div class="col-md-12">
+                            <h1>Register</h1>
+                            <h4>Stwórz nowe konto.</h4>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-12">
+                                    <form autocomplete="off" action="#" th:action="@{/auth/register}"
+                                          th:object="${user}" method="post"
+                                          role="form">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>First Name</label>
+                                                    <input type="text" th:field="*{name}" class="form-control"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Last Name</label>
+                                                    <input type="text" th:field="*{lastName}" class="form-control"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="text" th:field="*{email}" class="form-control"/>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Password</label>
+                                            <input type="password" th:field="*{password}" class="form-control"/>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary">Register</button>
+
+                                        <span th:utext="${successMessage}"></span>
+
+                                        <div class="alert alert-success alert-dismissible col-sm-12"
+                                             th:if="${(bindingResult != null && bindingResult.getAllErrors() != null)}">
+                                            <button type="button" class="close" data-dismiss="alert"
+                                                    aria-hidden="true">×
+                                            </button>
+                                            <ul th:each="data : ${bindingResult.getAllErrors()}">
+                                                <li th:text="${data.getObjectName() + ' :: ' + data.getDefaultMessage()}"></li>
+                                            </ul>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $(function () {
+                    var current = location.pathname;
+                    $('.nav-tabs li a').each(function () {
+                        var $this = $(this);
+                        if (current.indexOf($this.attr('href')) !== -1) {
+                            $this.addClass('active');
+                        }
+                    })
+                })
+            </script>
+        </div>
+</main>
