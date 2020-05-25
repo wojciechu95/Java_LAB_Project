@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/pwallet")
+@RequestMapping("/apitodos")
 public class ApiController {
 
     @Autowired

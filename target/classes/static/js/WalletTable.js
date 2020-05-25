@@ -16,7 +16,7 @@ function loadDataTable() {
     let isD = false;
     dataTable = $('#DT_load').DataTable({
         "ajax": {
-            "url": "pwallet/getall",
+            "url": "/apitodos/getall",
             "type": "GET",
             "datatype": "json",
         },
@@ -54,13 +54,13 @@ function loadDataTable() {
                 data: "id",
                 "render": function (data) {
                     return `<div class="text-center">
-                        <a onclick="showInPopup('/pwallet/getid?id=${data}','Update Transaction')" class='btn btn-success text-white'
-                            style='cursor:pointer;'>
+                        <a class="btn btn-success text-white" style="cursor:pointer;"
+                            onclick="Edit('/apitodos/getid?id=${data}','Update Todo')" >
                             Update
                         </a>
                         &nbsp;
-                        <a class='btn btn-danger text-white' style='cursor:pointer;'
-                            onclick=Delete('/pwallet/delete?id=${data}')>
+                        <a class="btn btn-danger text-white" style="cursor:pointer;"
+                            onclick="Delete('/apitodos/delete?id=${data}')">
                             Delete
                         </a>
                         </div>`;
@@ -116,4 +116,117 @@ function Delete(url) {
             )
         }
     });
+}
+
+Edit = (url, title) => {
+    $.ajax({
+        type: 'GET',
+        url: url,
+        success: function (todo) {
+
+            let idD = todo.id
+                ?`<input name="id" value="${todo.id}" hidden />`
+                : ``;
+            let des = todo.description
+                ?`${todo.description}`
+                : ``;
+            let tD = todo.targetDate
+                ?`${todo.targetDate}`
+                : ``;
+            let isD = todo.isDone
+                ?`checked="checked" `
+                : ``;
+
+            $('#form-modal .modal-body').html(`         
+            <form id="editApi" method="post">
+                ${idD}
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label>Description</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" name="description" id="description" value="${des}" class="form-control"
+                               required="required"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label>Target Date</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" name="targetDate" id="targetDate" value="${tD}" class="form-control"
+                               required="required"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label>Checked</label>
+                    </div>
+                    <div class="col-6">
+                        <input class="display-3" type="checkbox" name="isDone" id="isDone" value="true" 
+                        ${isD}/> <i class="text-success h3 fas fa-clipboard-check"></i>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-3 offset-3">
+                        <button type="submit" onclick="jQueryAjaxPost()" class="btn btn-primary form-control">
+                            Save
+                        </button>
+                    </div>
+                    </div>
+                </div>
+            </form>
+
+            <script>
+                $(function () {
+                    $("#targetDate").datetimepicker({
+                        format: 'd.m.Y H:i'
+                    });
+                });
+            </script>
+        </div>
+            `);
+            $('#form-modal .modal-title').html(title);
+            $('#form-modal').modal('show');
+        }
+    })
+}
+
+jQueryAjaxPost = form => {
+    try {
+        $("#editApi").submit(function(e) {
+            form = $(this);
+            console.log(form.serialize());
+
+        $.ajax({
+            type: 'POST',
+            url: '/apitodos/upsert',
+            data: form.serialize(),
+            success: function (todo) {
+                console.log('success')
+                if (todo) {
+                    $('#view-all').html(todo)
+                    $('#form-modal .modal-body').html('');
+                    $('#form-modal .modal-title').html('');
+                    $('#form-modal').modal('hide');
+                    dataTable.ajax.reload();
+                }
+                else
+                    $('#form-modal .modal-body').html(todo.html);
+            },
+            error: function (err) {
+                console.log('Error Ajax')
+                console.log(err)
+            }
+        })
+        //to prevent default form submit event
+        return false;
+        })
+    } catch (ex) {
+
+        console.log('Exception')
+        console.log(ex)
+    }
 }

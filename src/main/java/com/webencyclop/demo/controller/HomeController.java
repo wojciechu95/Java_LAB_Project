@@ -2,6 +2,7 @@ package com.webencyclop.demo.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -42,6 +43,15 @@ public class HomeController {
         model.addAttribute("title", "Privacy");
 
         return "../shared/_Layout" ;
+    }
+
+    @RequestMapping(value = "/apitodos", method = RequestMethod.GET)
+    public String todos(ModelMap model) {
+
+        model.addAttribute("page", "../templates/apiList");
+        model.addAttribute("title", "TdDos");
+
+        return "../shared/_Layout";
     }
 
 }

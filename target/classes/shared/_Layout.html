@@ -23,7 +23,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                <ul class="navbar-nav flex-grow-1">
+                <ul class="navbar-nav flex-grow-1 dropdown">
                     <li class="nav-item">
                         <a th:href="@{/home/kontakt}" class="nav-link text-dark"><i class="fas fa-id-card"></i> Kontakt</a>
                     </li>
@@ -33,9 +33,13 @@
                     <li class="nav-item">
                         <a th:href="@{/home/privacy}" class="nav-link text-dark"><i class="fas fa-user-secret"></i> Privacy</a>
                     </li>
-                    <li class="nav-item">
-                        <a th:href="@{/pwallet}" class="nav-link text-dark"><i class="fas fa-tasks"></i> Todo</a>
+                    <li class="nav-item dropdown-toggle" data-toggle="dropdown" style="cursor:pointer;">
+                        <span class="nav-link text-dark">Listy <i class="fas fa-arrow-down"></i></span>
                     </li>
+                    <ul class="nav-item dropdown-menu text-dark" style="left: 25%">
+                        <li><a th:href="@{/todos}" class="nav-link text-dark"><i class="fas fa-tasks"></i> Todo</a></li>
+                        <li><a th:href="@{/apitodos}" class="nav-link text-dark"><i class="fas fa-tasks"></i> API Todo</a></li>
+                    </ul>
                     <li class="nav-item border border-info" sec:authorize="isAuthenticated()">
                         <a th:href="@{/logout}" class="nav-link text-dark">Logout <i class="fas fa-sign-out-alt"></i></a>
                     </li>

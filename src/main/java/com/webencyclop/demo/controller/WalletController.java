@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 @Controller
-@RequestMapping("/pwallet")
+@RequestMapping("/todos")
 public class WalletController {
 
     @Autowired
@@ -30,13 +30,13 @@ public class WalletController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String getAll(ModelMap model) {
+    public String todos(ModelMap model) {
 
         String name = getLoggedInUserName(model);
         model.put("todos", todoService.getTodosByUser(name));
 
-        model.addAttribute("page", "../templates/pwallet");
-        model.addAttribute("title", "PWallet");
+        model.addAttribute("page", "../templates/todos");
+        model.addAttribute("title", "TdDos");
 
         return "../shared/_Layout";
     }
@@ -56,7 +56,7 @@ public class WalletController {
 
         model.addAttribute("todo", new Todo());
         model.addAttribute("page", "../templates/todo");
-        model.addAttribute("title", "PWallet");
+        model.addAttribute("title", "TdDos");
 
         return "../shared/_Layout";
     }
@@ -65,7 +65,7 @@ public class WalletController {
     public String deleteTodo(@RequestParam long id) {
         todoService.deleteTodo(id);
 
-        return "redirect:/pwallet";
+        return "redirect:/todos";
     }
 
     @RequestMapping(value = "/update-todo", method = RequestMethod.GET)
@@ -74,7 +74,7 @@ public class WalletController {
 
         model.put("todo", todo);
         model.addAttribute("page", "../templates/todo");
-        model.addAttribute("title", "PWallet");
+        model.addAttribute("title", "TdDos");
 
         return "../shared/_Layout";
     }
@@ -85,7 +85,7 @@ public class WalletController {
         if (result.hasErrors()) {
 
             model.addAttribute("page", "../templates/todo");
-            model.addAttribute("title", "PWallet");
+            model.addAttribute("title", "TdDos");
 
             return "../shared/_Layout";
         }
@@ -93,10 +93,10 @@ public class WalletController {
         todo.setUserName(getLoggedInUserName(model));
         todoService.updateTodo(todo);
 
-        model.addAttribute("page", "../templates/pwallet");
-        model.addAttribute("title", "PWallet");
+        model.addAttribute("page", "../templates/todos");
+        model.addAttribute("title", "TdDos");
 
-        return "redirect:/pwallet";
+        return "redirect:/todos";
     }
 
     @RequestMapping(value = "/add-todo", method = RequestMethod.POST)
@@ -104,7 +104,7 @@ public class WalletController {
 
         if (result.hasErrors()) {
             model.addAttribute("page", "../templates/todo");
-            model.addAttribute("title", "PWallet");
+            model.addAttribute("title", "TdDos");
 
             return "../shared/_Layout";
         }
@@ -113,9 +113,9 @@ public class WalletController {
 
         todoService.saveTodo(todo);
 
-        model.addAttribute("page", "../templates/pwallet");
-        model.addAttribute("title", "PWallet");
+        model.addAttribute("page", "../templates/todos");
+        model.addAttribute("title", "TdDos");
 
-        return "redirect:/pwallet";
+        return "redirect:/todos";
     }
 }

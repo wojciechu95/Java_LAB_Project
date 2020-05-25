@@ -16,7 +16,7 @@ function loadDataTable() {
     let isD = false;
     dataTable = $('#DT_load').DataTable({
         "ajax": {
-            "url": "pwallet/getall",
+            "url": "/apitodos/getall",
             "type": "GET",
             "datatype": "json",
         },
@@ -55,12 +55,12 @@ function loadDataTable() {
                 "render": function (data) {
                     return `<div class="text-center">
                         <a class="btn btn-success text-white" style="cursor:pointer;"
-                            onclick="Edit('/pwallet/getid?id=${data}','Update Todo')" >
+                            onclick="Edit('/apitodos/getid?id=${data}','Update Todo')" >
                             Update
                         </a>
                         &nbsp;
                         <a class="btn btn-danger text-white" style="cursor:pointer;"
-                            onclick="Delete('/pwallet/delete?id=${data}')">
+                            onclick="Delete('/apitodos/delete?id=${data}')">
                             Delete
                         </a>
                         </div>`;
@@ -166,7 +166,7 @@ Edit = (url, title) => {
                     </div>
                     <div class="col-6">
                         <input class="display-3" type="checkbox" name="isDone" id="isDone" value="true" 
-                        ${isD} /> <i class="text-success h3 fas fa-clipboard-check"></i>
+                        ${isD}/> <i class="text-success h3 fas fa-clipboard-check"></i>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -202,7 +202,7 @@ jQueryAjaxPost = form => {
 
         $.ajax({
             type: 'POST',
-            url: '/pwallet/upsert',
+            url: '/apitodos/upsert',
             data: form.serialize(),
             success: function (todo) {
                 console.log('success')
