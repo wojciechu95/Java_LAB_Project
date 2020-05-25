@@ -9,10 +9,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/pwallet")
@@ -22,8 +22,8 @@ public class ApiController {
     private ITodoService todoService;
 
     @RequestMapping(path="/getall", method = RequestMethod.GET, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
-    public Map<String, List<Todo>> getAllTodo(ModelMap model){
-        String name = getLoggedInUserName(model);
+    public Map<String, List<Todo>> getAllTodo(){
+        String name = getLoggedInUserName();
 
         Map<String, List<Todo>> assoc = new HashMap<String, List<Todo>>();
 
@@ -32,7 +32,7 @@ public class ApiController {
         return assoc;
     }
 
-    private String getLoggedInUserName(ModelMap model) {
+    private String getLoggedInUserName() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal instanceof UserDetails) {
@@ -51,9 +51,14 @@ public class ApiController {
         return todo;
     }
 
+    @RequestMapping(value = "/upsert", method = RequestMethod.POST, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
+    public Boolean Upsert(@Valid Todo todo) {
 
+        todo.setUserName(getLoggedInUserName());
+        todoService.updateTodo(todo);
 
-
+        return true;
+    }
 
     @DeleteMapping("/delete")
     public Map<String, Boolean> delete(@RequestParam Long id) {
